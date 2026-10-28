@@ -1,0 +1,100 @@
+n class="btn-green" id="checkBtn" onclick="startCheck()">Check Game</button>
+
+    <div id="dollarFlash" class="flashing-dollars">$ $ $</div>
+
+    <div id="resultBox" class="result-box">
+        <div id="resultTitle" style="font-size: 20px; font-weight: bold; margin-bottom: 8px;"></div>
+        <p id="resultText"></p>
+        <div id="affiliateContainer"></div>
+    </div>
+
+    <!-- THE CUSTOM USER VENT ROOM AREA -->
+    <div id="ventRoomSection" class="vent-room">
+        <h3 style="color: #721c24; margin-top: 0;">🤬 The Private Vent Room</h3>
+        <p style="font-size: 13px; color: #555;">Did this game rip you off too? Get it off your chest and vent your frustration below. Your story helps us lock them in our data forever!</p>
+        <textarea id="ventText" rows="3" placeholder="Type how they scammed you (fake lines, level traps, stolen Cash App fees)..."></textarea>
+        <button class="btn-blue" style="background-color: #6c757d;" onclick="submitVent()">Submit My Vent</button>
+    </div>
+</div>
+
+<script>
+    // 1. Password Verification Lock
+    function checkPassword() {
+        var password = document.getElementById("passwordField").value;
+        if (password === "scambuster2026") {
+            document.getElementById("loginGate").style.display = "none";
+            document.getElementById("searchApp").style.display = "block";
+        } else {
+            alert("Incorrect password. Please check your Gumroad receipt.");
+        }
+    }
+
+    // 2. The Automated 3-Second Action Sequence
+    function startCheck() {
+        var gameName = document.getElementById("gameInput").value.trim().toLowerCase();
+        if (gameName === "") { alert("Please type a name first."); return; }
+
+        var burglar = document.getElementById("burglar");
+        var gameInput = document.getElementById("gameInput");
+        var resultBox = document.getElementById("resultBox");
+        var dollarFlash = document.getElementById("dollarFlash");
+        var ventRoom = document.getElementById("ventRoomSection");
+
+        resultBox.style.display = "none";
+        dollarFlash.style.display = "none";
+        dollarFlash.style.animation = "none";
+        ventRoom.style.display = "none";
+
+        // BURGLAR SNATCH ANIMATION LOOP
+        if (gameName.includes("1788") || gameName.includes("cash") || gameName.includes("win") || gameName.includes("slots") || gameName.includes("drama") || gameName.includes("shorts")) {
+            burglar.style.display = "block";
+            burglar.style.animation = "snatchRun 2.5s ease-in-out forwards";
+            
+            // Text vanishes into the bag halfway across the animation run
+            setTimeout(function() {
+                gameInput.value = ""; 
+                gameInput.placeholder = "💥 GAME NAME SNATCHED BY BURGLAR!";
+            }, 1250);
+
+            // Trigger the clean final answer once the thief runs off-screen
+            setTimeout(function() {
+                burglar.style.display = "none";
+                gameInput.placeholder = "Enter game or app name...";
+                showFinalResult("scam");
+            }, 2500);
+        } 
+        // GREEN LIGHT FLASHING DOLLARS LOOP
+        else if (gameName.includes("mistplay") || gameName.includes("swagbucks") || gameName.includes("inboxdollars")) {
+            dollarFlash.style.display = "block";
+            dollarFlash.style.animation = "flashGreen 0.4s infinite alternate";
+            
+            setTimeout(function() {
+                dollarFlash.style.display = "none";
+                showFinalResult("legit");
+            }, 2000);
+        } 
+        // SAFETY FILTER FOR UNKNOWN INPUTS
+        else {
+            showFinalResult("unknown");
+        }
+    }
+
+    // 3. Final Result Generation
+    function showFinalResult(status) {
+        var resultBox = document.getElementById("resultBox");
+        var resultTitle = document.getElementById("resultTitle");
+        var resultText = document.getElementById("resultText");
+        var affiliateContainer = document.getElementById("affiliateContainer");
+        var ventRoom = document.getElementById("ventRoomSection");
+
+        resultBox.style.display = "block";
+        affiliateContainer.innerHTML = "";
+
+        if (status === "scam") {
+            resultBox.className = "result-box scam-alert";
+            resultTitle.innerHTML = "🚨 RED LIGHT: VERIFIED TRAP!";
+            resultText.innerHTML = "WARNING: This app is a certified scam. They use fake 3,089 queues, halt your level progress, or charge fake upfront processing fees on Cash App. Do not waste your time!";
+            ventRoom.style.display = "block"; 
+        } else if (status === "legit") {
+            resultBox.className = "result-box legit-alert";
+            resultTitle.innerHTML
